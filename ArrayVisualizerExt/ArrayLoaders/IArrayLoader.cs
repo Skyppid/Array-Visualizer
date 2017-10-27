@@ -4,24 +4,25 @@ using EnvDTE;
 
 namespace ArrayVisualizerExt.ArrayLoaders
 {
-  public interface IArrayLoader
-  {
-    char LeftBracket { get; }
+    public interface IArrayLoader
+    {
+        char LeftBracket { get; }
 
-    char RightBracket { get; }
+        char RightBracket { get; }
 
-    int ParseDimension(string dimension);
+        int ParseDimension(string dimension);
 
-    bool IsExpressionArrayType(Expression expression);
+        bool IsExpressionArrayType(Expression expression);
 
-    string GetDisplayName(Expression expression);
+        string GetDisplayName(Expression expression);
 
-    IEnumerable<ExpressionInfo> GetArrays(string section, Expression expression, ParsersCollection parsers, int sectionCode);
+        IEnumerable<ExpressionInfo> GetArrays(string section, Expression expression, ParsersCollection parsers,
+            int sectionCode);
 
-    int[] GetDimensions(Expression expression);
+        int[] GetDimensions(Expression expression);
 
-    int GetMembersCount(Expression expression);
+        int GetMembersCount(Expression expression);
 
-    object[] GetValues(Expression expression);
-  }
+        object[] GetValues(Expression expression);
+    }
 }

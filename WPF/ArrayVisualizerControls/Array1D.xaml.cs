@@ -3,43 +3,43 @@ using AvProp = ArrayVisualizerControls.Properties;
 
 namespace ArrayVisualizerControls
 {
-  public partial class Array1D
-  {
-    #region Methods
-
-    protected override void DrawContent()
+    public partial class Array1D
     {
-      if (Data.Rank != 1)
-        throw new ArrayTypeMismatchException(AvProp.Resources.ArrayNot1DException);
+        #region Methods
 
-      string toolTipFmt = string.Format("{0}{{0}}{1}", LeftBracket, RightBracket);
-      for (int x = 0; x < DimX; x++)
-      {
-        object data = Data.GetValue(x);
-        double labelX = x * CellSize.Width;
+        protected override void DrawContent()
+        {
+            if (Data.Rank != 1)
+                throw new ArrayTypeMismatchException(AvProp.Resources.ArrayNot1DException);
 
-        string toolTipCoordinates = string.Format(toolTipFmt, x);
+            string toolTipFmt = string.Format("{0}{{0}}{1}", LeftBracket, RightBracket);
+            for (int x = 0; x < DimX; x++)
+            {
+                object data = Data.GetValue(x);
+                double labelX = x * CellSize.Width;
 
-        AddLabel(ArrayRenderSection.Front, toolTipCoordinates, labelX, 1, data);
-      }
+                string toolTipCoordinates = string.Format(toolTipFmt, x);
+
+                AddLabel(ArrayRenderSection.Front, toolTipCoordinates, labelX, 1, data);
+            }
+        }
+
+        protected override void RenderBlankGrid()
+        {
+            if (Data.Rank != 1)
+                throw new ArrayTypeMismatchException(AvProp.Resources.ArrayNot1DException);
+
+            Width = CellSize.Width * DimX + 1;
+            Height = CellSize.Height + 1;
+            InvalidateVisual();
+
+            for (double y = 0; y <= Height; y = y + CellSize.Height)
+                AddLine(0, y, Width, y);
+
+            for (double x = 0; x <= Width; x = x + CellSize.Width)
+                AddLine(x, 0, x, Height);
+        }
+
+        #endregion
     }
-
-    protected override void RenderBlankGrid()
-    {
-      if (Data.Rank != 1)
-        throw new ArrayTypeMismatchException(AvProp.Resources.ArrayNot1DException);
-
-      Width = CellSize.Width * DimX + 1;
-      Height = CellSize.Height + 1;
-      InvalidateVisual();
-
-      for (double y = 0; y <= Height; y = y + CellSize.Height)
-        AddLine(0, y, Width, y);
-
-      for (double x = 0; x <= Width; x = x + CellSize.Width)
-        AddLine(x, 0, x, Height);
-    }
-
-    #endregion
-  }
 }

@@ -2,26 +2,30 @@
 
 namespace ArrayVisualizerControls
 {
-  public class CellClickEventArgs : RoutedEventArgs
-  {
-    public CellClickEventArgs()
-    { }
-
-    public CellClickEventArgs(RoutedEvent routedEvent)
-      : base(routedEvent) { }
-
-    public CellClickEventArgs(RoutedEvent routedEvent, object source)
-      : base(routedEvent, source) { }
-
-    public CellClickEventArgs(object data, string toolTipPrefix, RoutedEvent routedEvent, object source)
-      : base(routedEvent, source)
+    public class CellClickEventArgs : RoutedEventArgs
     {
-      Data = data;
-      ToolTipPrefix = toolTipPrefix;
-    }
+        public CellClickEventArgs()
+        {
+        }
 
-    public object Data { get; set; }
-    public string ToolTipPrefix { get; set; }
-  }
+        public CellClickEventArgs(RoutedEvent routedEvent)
+            : base(routedEvent)
+        {
+        }
+
+        public CellClickEventArgs(RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
+        {
+        }
+
+        public CellClickEventArgs(object data, string toolTipPrefix, RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
+        {
+            Data = data;
+            ToolTipPrefix = toolTipPrefix;
+        }
+
+        public object Data { get; set; }
+        public string ToolTipPrefix { get; set; }
+    }
 }
- 

@@ -4,12 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-
 using LinqLib.Array;
 using LinqLib.Sequence;
-
 using WinFormsArrayVisualizer.Properties;
-
 using WinFormsArrayVisualizerControls;
 
 namespace WinFormsArrayVisualizer
@@ -43,19 +40,21 @@ namespace WinFormsArrayVisualizer
             while (list.IndexOf(",,", StringComparison.CurrentCulture) != -1)
                 list = list.Replace(",,", ",");
 
-            return list.Split(new[] { ',' });
+            return list.Split(new[] {','});
         }
 
         private Array Get2DArray(int x, int y)
         {
             if (radioButtonAutoFill.Checked)
-                return Enumerator.Generate(numericUpDownStart.Value, numericUpDownInc.Value, x * y).Select(V => (double)V).ToArray(y, x);
+                return Enumerator.Generate(numericUpDownStart.Value, numericUpDownInc.Value, x * y)
+                    .Select(V => (double) V).ToArray(y, x);
 
             if (radioButtonManualFill.Checked)
                 try
                 {
                     IEnumerable<string> items = GetManualItems();
-                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat)).ToArray(y, x);
+                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat))
+                        .ToArray(y, x);
                 }
                 catch (Exception ex)
                 {
@@ -66,7 +65,8 @@ namespace WinFormsArrayVisualizer
             try
             {
                 IEnumerable<string> items = GetFileItems();
-                return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat)).ToArray(y, x);
+                return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat))
+                    .ToArray(y, x);
             }
             catch (FormatException ex)
             {
@@ -77,65 +77,70 @@ namespace WinFormsArrayVisualizer
         private Array Get3DArray(int x, int y, int z)
         {
             if (radioButtonAutoFill.Checked)
-                return Enumerator.Generate(numericUpDownStart.Value, numericUpDownInc.Value, x * y * z).Select(V => (double)V).ToArray(z, y, x);
-             if (radioButtonManualFill.Checked)
+                return Enumerator.Generate(numericUpDownStart.Value, numericUpDownInc.Value, x * y * z)
+                    .Select(V => (double) V).ToArray(z, y, x);
+            if (radioButtonManualFill.Checked)
                 try
                 {
                     IEnumerable<string> items = GetManualItems();
-                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat)).ToArray(z, y, x);
+                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat))
+                        .ToArray(z, y, x);
                 }
                 catch (Exception ex)
                 {
                     throw new FormatException(Resources.InvalidInputFormat, ex);
                 }
-            
-                // file
-                try
-                {
-                    IEnumerable<string> items = GetFileItems();
-                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat)).ToArray(z, y, x);
-                }
-                catch (FormatException ex)
-                {
-                    throw new FormatException(Resources.InvalidFileContent, ex);
-                }
+
+            // file
+            try
+            {
+                IEnumerable<string> items = GetFileItems();
+                return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat))
+                    .ToArray(z, y, x);
+            }
+            catch (FormatException ex)
+            {
+                throw new FormatException(Resources.InvalidFileContent, ex);
+            }
         }
 
         private Array Get4DArray(int x, int y, int z, int a)
         {
             if (radioButtonAutoFill.Checked)
-                return Enumerator.Generate(numericUpDownStart.Value, numericUpDownInc.Value, x * y * z * a).Select(V => (double)V).ToArray(a, z, y, x);
-            
+                return Enumerator.Generate(numericUpDownStart.Value, numericUpDownInc.Value, x * y * z * a)
+                    .Select(V => (double) V).ToArray(a, z, y, x);
+
             if (radioButtonManualFill.Checked)
                 try
                 {
                     IEnumerable<string> items = GetManualItems();
-                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat)).ToArray(a, z, y, x);
+                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat))
+                        .ToArray(a, z, y, x);
                 }
                 catch
                 {
                     throw new FormatException(Resources.InvalidInputFormat);
                 }
-            
-                // file
-                try
-                {
-                    IEnumerable<string> items = GetFileItems();
-                    return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat))
-                                .ToArray(a, z, y, x);
-                }
-                catch (FormatException)
-                {
-                    throw new FormatException(Resources.InvalidFileContent);
-                }
+
+            // file
+            try
+            {
+                IEnumerable<string> items = GetFileItems();
+                return items.Select(X => double.Parse(X, Thread.CurrentThread.CurrentUICulture.NumberFormat))
+                    .ToArray(a, z, y, x);
+            }
+            catch (FormatException)
+            {
+                throw new FormatException(Resources.InvalidFileContent);
+            }
         }
 
         private Array GetData(int dimensions)
         {
-            var x = (int)numericUpDownX.Value;
-            var y = (int)numericUpDownY.Value;
-            var z = (int)numericUpDownZ.Value;
-            var a = (int)numericUpDownA.Value;
+            var x = (int) numericUpDownX.Value;
+            var y = (int) numericUpDownY.Value;
+            var z = (int) numericUpDownZ.Value;
+            var a = (int) numericUpDownA.Value;
 
             switch (dimensions)
             {
@@ -146,13 +151,15 @@ namespace WinFormsArrayVisualizer
                 case 4:
                     return Get4DArray(x, y, z, a);
                 default:
-                    throw new ArrayTypeMismatchException(string.Format(Thread.CurrentThread.CurrentUICulture.NumberFormat, Resources.ArrayNotValidDimsException, dimensions));
+                    throw new ArrayTypeMismatchException(string.Format(
+                        Thread.CurrentThread.CurrentUICulture.NumberFormat, Resources.ArrayNotValidDimsException,
+                        dimensions));
             }
         }
 
         private IEnumerable<string> GetFileItems()
         {
-            var name = (string)lblFile.Tag;
+            var name = (string) lblFile.Tag;
             string list = string.Join(",", File.ReadAllLines(name));
             return GetItems(list);
         }
@@ -289,13 +296,15 @@ namespace WinFormsArrayVisualizer
                         arrCtl = new Array4D();
                         break;
                     default:
-                        throw new ArrayTypeMismatchException(string.Format(Thread.CurrentThread.CurrentUICulture.NumberFormat, Resources.ArrayNotValidDimsException, dims));
+                        throw new ArrayTypeMismatchException(string.Format(
+                            Thread.CurrentThread.CurrentUICulture.NumberFormat, Resources.ArrayNotValidDimsException,
+                            dims));
                 }
 
                 mainPanel.Controls.Add(arrCtl);
 
-                arrCtl.CellWidth = (int)numericUpDownCellWidth.Value;
-                arrCtl.CellHeight = (int)numericUpDownCellHeight.Value;
+                arrCtl.CellWidth = (int) numericUpDownCellWidth.Value;
+                arrCtl.CellHeight = (int) numericUpDownCellHeight.Value;
                 arrCtl.Formatter = "0.##";
 
                 arrCtl.Data = GetData(dims);
@@ -312,21 +321,21 @@ namespace WinFormsArrayVisualizer
 
         private void resizeButton_Click(object sender, EventArgs e)
         {
-            var x = (int)numericUpDownX1.Value;
-            var y = (int)numericUpDownY1.Value;
-            var z = (int)numericUpDownZ1.Value;
-            var a = (int)numericUpDownA1.Value;
+            var x = (int) numericUpDownX1.Value;
+            var y = (int) numericUpDownY1.Value;
+            var z = (int) numericUpDownZ1.Value;
+            var a = (int) numericUpDownA1.Value;
 
             switch (dims)
             {
                 case 2:
-                    arrCtl.Data = ((double[,])arrCtl.Data).Resize(y, x);
+                    arrCtl.Data = ((double[,]) arrCtl.Data).Resize(y, x);
                     break;
                 case 3:
-                    arrCtl.Data = ((double[, ,])arrCtl.Data).Resize(z, y, x);
+                    arrCtl.Data = ((double[,,]) arrCtl.Data).Resize(z, y, x);
                     break;
                 case 4:
-                    arrCtl.Data = ((double[, , ,])arrCtl.Data).Resize(a, z, y, x);
+                    arrCtl.Data = ((double[,,,]) arrCtl.Data).Resize(a, z, y, x);
                     break;
                 default:
                     throw new ArrayTypeMismatchException();
@@ -357,13 +366,13 @@ namespace WinFormsArrayVisualizer
             switch (dims)
             {
                 case 2:
-                    arrCtl.Data = ((double[,])arrCtl.Data).Rotate(angle);
+                    arrCtl.Data = ((double[,]) arrCtl.Data).Rotate(angle);
                     break;
                 case 3:
-                    arrCtl.Data = ((double[, ,])arrCtl.Data).Rotate(r, angle);
+                    arrCtl.Data = ((double[,,]) arrCtl.Data).Rotate(r, angle);
                     break;
                 case 4:
-                    arrCtl.Data = ((double[, , ,])arrCtl.Data).Rotate(r, angle);
+                    arrCtl.Data = ((double[,,,]) arrCtl.Data).Rotate(r, angle);
                     break;
             }
         }

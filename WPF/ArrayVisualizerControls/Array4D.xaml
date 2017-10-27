@@ -6,7 +6,5 @@
                  mc:Ignorable="d"
                  d:DesignHeight="300" d:DesignWidth="300"
                  xmlns:av="clr-namespace:ArrayVisualizerControls">
-  <Grid>
-
-  </Grid>
+    <Grid />
 </av:ArrayControl>

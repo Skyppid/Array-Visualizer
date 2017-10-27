@@ -12,7 +12,7 @@ Option Strict On
 Option Explicit On
 
 
-Namespace My
+Namespace My_Project
     
     'NOTE: This file is auto-generated; do not modify it directly.  To make changes,
     ' or if you encounter build errors in this file, go to the Project Designer

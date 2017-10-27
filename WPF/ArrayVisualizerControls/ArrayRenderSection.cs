@@ -1,9 +1,9 @@
 ﻿namespace ArrayVisualizerControls
 {
-  public enum ArrayRenderSection
-  {
-    Front,
-    Top,
-    Side
-  }
+    public enum ArrayRenderSection
+    {
+        Front,
+        Top,
+        Side
+    }
 }

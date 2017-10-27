@@ -1,2 +1,6 @@
+Version 1.5.1.0:
+[IMPROVED]
+- Persistence of array-selection: The array does not get deselected when switching between run and debug mode, thus making it a lot more convenient to debug the same array without step-by-step debugging
+
 Version 1.5.0.0:
 - Upgraded for Visual Studio 2017

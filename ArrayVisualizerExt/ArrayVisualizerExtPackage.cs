@@ -94,6 +94,5 @@ namespace ArrayVisualizerExt
         }
 
         #endregion
-
     }
 }

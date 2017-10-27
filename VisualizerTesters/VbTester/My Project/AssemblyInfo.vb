@@ -7,17 +7,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("VbTester")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Amir Liberman")> 
-<Assembly: AssemblyProduct("VbTester")> 
-<Assembly: AssemblyCopyright("Copyright ©  Amir Liberman 2012-2013")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("VbTester")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("Amir Liberman")>
+<Assembly: AssemblyProduct("VbTester")>
+<Assembly: AssemblyCopyright("Copyright ©  Amir Liberman 2012-2013")>
+<Assembly: AssemblyTrademark("")>
 
-<Assembly: ComVisible(False)> 
+<Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("f4f72216-1e6a-45f0-9f32-a0be4e311eef")> 
+<Assembly: Guid("f4f72216-1e6a-45f0-9f32-a0be4e311eef")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -30,6 +30,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.1.8")> 
-<Assembly: AssemblyFileVersion("1.0.1.8")> 
+<Assembly: AssemblyVersion("1.0.1.8")>
+<Assembly: AssemblyFileVersion("1.0.1.8")>
 
