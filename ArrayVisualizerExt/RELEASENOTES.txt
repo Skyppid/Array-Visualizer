@@ -1,0 +1,2 @@
+Version 1.5.0.0:
+- Upgraded for Visual Studio 2017
