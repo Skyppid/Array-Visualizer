@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+	<Identifier Id="d22013ee-b366-456f-9291-7a2d201d7e24">
+		<Name>Array Visualizer</Name>
+		<Author>Amir Liberman</Author>
+		<Version>1.4.0.0</Version>
+		<Description xml:space="preserve">Array Visualizer is a free, open source extension for visual studio. It is designed to display arrays (Jagged and up to 4D) while debugging an application.</Description>
+		<Locale>1033</Locale> 
+		<MoreInfoUrl>http://bit.ly/ZU3X9B</MoreInfoUrl>
+		<License>MS-PL.txt</License>
+		<GettingStartedGuide>http://bit.ly/155n1RK</GettingStartedGuide>
+		<Icon>Package.ico</Icon>
+		<PreviewImage>ArrVizPreview.png</PreviewImage>
+		<InstalledByMsi>false</InstalledByMsi>
+		<SupportedProducts>
+			<VisualStudio Version="14.0">
+				<Edition>Ultimate</Edition>
+				<Edition>Premium</Edition>
+				<Edition>Pro</Edition>
+			</VisualStudio>
+			<VisualStudio Version="12.0">
+				<Edition>Ultimate</Edition>
+				<Edition>Premium</Edition>
+				<Edition>Pro</Edition>
+			</VisualStudio>
+			<VisualStudio Version="11.0">
+				<Edition>Ultimate</Edition>
+				<Edition>Premium</Edition>
+				<Edition>Pro</Edition>
+			</VisualStudio>
+			<VisualStudio Version="10.0">
+				<Edition>Ultimate</Edition>
+				<Edition>Premium</Edition>
+				<Edition>Pro</Edition>
+			</VisualStudio>
+		</SupportedProducts>
+		<SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+	</Identifier>
+	<References>
+		<Reference Id="Microsoft.VisualStudio.MPF" MinVersion="10.0">
+			<Name>Visual Studio MPF</Name>
+		</Reference>
+	</References>
+	<Content>
+		<VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
+	</Content>
+</Vsix>
