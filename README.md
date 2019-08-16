@@ -7,7 +7,7 @@ I just migrated the whole project to Visual Studio 2017 since it is a really nea
 
 ### How do I get set up? ###
 
-Either go to **Downloads** and just get the latest .vsix-Installer, or build it yourself.
+Either go to **[Releases](https://github.com/Skyppid/Array-Visualizer/releases)** and just get the latest .vsix-Installer, or build it yourself.
 You will have to create your own signature key file and set up all projects with it in order to build.
 
 The following workloads are necessary to build:
