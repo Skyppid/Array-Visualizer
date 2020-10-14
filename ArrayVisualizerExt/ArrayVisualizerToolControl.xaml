@@ -3,8 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.10.0"
-    xmlns:ArrayVisualizerControls="clr-namespace:ArrayVisualizerControls;assembly=ArrayVisualizerControls"
     mc:Ignorable="d" d:DesignWidth="808" d:DesignHeight="600"
     x:Class="ArrayVisualizerExt.ArrayVisualizerToolControl"
     x:Name="ArrayVisualizerToolWindow">

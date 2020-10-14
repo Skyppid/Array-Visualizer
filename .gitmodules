@@ -1,0 +1,3 @@
+[submodule "LinqLib"]
+	path = LinqLib
+	url = https://github.com/AmirLiberman/LinqLib.git
