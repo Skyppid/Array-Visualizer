@@ -1,9 +1,9 @@
 # README #
 
-## ArrayVisualizer for Visual Studio 2017 ##
+## ArrayVisualizer for Visual Studio 2017 & 2019 ##
 
 This project was forked from [Codeplex](http://arrayvisualizer.codeplex.com/). All credits go to **Amir Liberman** who created the project initially.
-I just migrated the whole project to Visual Studio 2017 since it is a really neat extension.
+I just migrated the whole project to Visual Studio 2017 (now 2019) since it is a really neat extension.
 
 ### How do I get set up? ###
 
