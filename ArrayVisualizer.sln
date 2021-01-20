@@ -9,13 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{DD3750D9-66E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VisualizerTesters", "VisualizerTesters", "{F9C1251A-5C6A-4A3B-ACD1-9DBC1A03FDD9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E4AC90B6-9A78-47BA-AACA-B3B8D6D865DA}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsArrayVisualizer", "WinForms\ArrayVisualizer\WinFormsArrayVisualizer.csproj", "{3795E735-B135-407A-A779-52E5231BF040}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsArrayVisualizerControls", "WinForms\ArrayVisualizerControls\WinFormsArrayVisualizerControls.csproj", "{E26DC262-233B-4E57-B71B-5F3A50E8129F}"
