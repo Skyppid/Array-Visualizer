@@ -13,10 +13,7 @@ namespace ArrayVisualizerExt
             Value = value;
         }
 
-        public string FullName
-        {
-            get { return Section + Name + " - " + Value; }
-        }
+        public string FullName => Section + Name + " - " + Value;
 
         public int SectionCode { get; set; }
         public string Name { get; set; }

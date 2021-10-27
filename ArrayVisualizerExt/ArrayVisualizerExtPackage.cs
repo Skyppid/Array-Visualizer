@@ -3,6 +3,7 @@ using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -29,7 +30,7 @@ namespace ArrayVisualizerExt
     [ProvideMenuResource("Menus.ctmenu", 1)]
     // This attribute registers a tool window exposed by this package.
     [ProvideToolWindow(typeof(ArrayVisualizerToolWindow))]
-    [Guid(GuidList.guidArrayVisualizerExtPkgString)]
+    [Guid(GuidList.GuidArrayVisualizerExtPkgString)]
     public sealed class ArrayVisualizerExtPackage : Package
     {
         /// <summary>
@@ -42,7 +43,7 @@ namespace ArrayVisualizerExt
         public ArrayVisualizerExtPackage()
         {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}",
-                this.ToString()));
+                ToString()));
         }
 
         /// <summary>
@@ -55,13 +56,15 @@ namespace ArrayVisualizerExt
             // Get the instance number 0 of this tool window. This window is single instance so this instance
             // is actually the only one.
             // The last flag is set to true so that if the tool window does not exists it will be created.
-            ToolWindowPane window = this.FindToolWindow(typeof(ArrayVisualizerToolWindow), 0, true);
+            ToolWindowPane window = FindToolWindow(typeof(ArrayVisualizerToolWindow), 0, true);
             if ((null == window) || (null == window.Frame))
             {
                 throw new NotSupportedException(Resources.CanNotCreateWindow);
             }
+
+            ThreadHelper.ThrowIfNotOnUIThread();
             IVsWindowFrame windowFrame = (IVsWindowFrame) window.Frame;
-            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }
 
 
@@ -77,17 +80,17 @@ namespace ArrayVisualizerExt
         protected override void Initialize()
         {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}",
-                this.ToString()));
+                ToString()));
             base.Initialize();
 
             // Add our command handlers for menu (commands must exist in the .vsct file)
-            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null != mcs)
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (GetService(typeof(IMenuCommandService)) is OleMenuCommandService mcs)
             {
                 // Create the command for the tool window
-                CommandID toolwndCommandID = new CommandID(GuidList.guidArrayVisualizerExtCmdSet,
-                    (int) PkgCmdIDList.arrayVisualizerTool);
-                MenuCommand menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
+                CommandID toolwndCommandId = new CommandID(GuidList.GuidArrayVisualizerExtCmdSet,
+                    (int) PkgCmdIdList.ArrayVisualizerTool);
+                MenuCommand menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandId);
                 mcs.AddCommand(menuToolWin);
                 //GlobalVars.menuToolWin = menuToolWin;
             }

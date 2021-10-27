@@ -18,24 +18,15 @@ namespace ArrayVisualizerExt
 
         public ChartValueType ChartXValueType
         {
-            get { return ChartValueType.Double; }
+            get => ChartValueType.Double;
             set { }
         }
 
-        public int Count
-        {
-            get { return _arr.Length; }
-        }
+        public int Count => _arr.Length;
 
-        public ChartValueType XValueType
-        {
-            get { return ChartValueType.Double; }
-        }
+        public ChartValueType XValueType => ChartValueType.Double;
 
-        public IChartDataPoint this[int index]
-        {
-            get { return new ChartDataPoint {X = index, Y = _arr[index]}; }
-        }
+        public IChartDataPoint this[int index] => new ChartDataPoint {X = index, Y = _arr[index]};
 
         #endregion
 
@@ -60,10 +51,7 @@ namespace ArrayVisualizerExt
 
         public bool EmptyPoint { get; set; }
 
-        public bool IsEmpty
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsEmpty => throw new NotImplementedException();
 
         public object Item { get; set; }
         public string Label { get; set; }

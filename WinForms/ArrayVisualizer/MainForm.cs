@@ -15,8 +15,8 @@ namespace WinFormsArrayVisualizer
     {
         #region Fields
 
-        private ArrayXD arrCtl;
-        private int dims;
+        private ArrayXD _arrCtl;
+        private int _dims;
 
         #endregion
 
@@ -171,7 +171,7 @@ namespace WinFormsArrayVisualizer
 
         private void SaveToFile(string fileName)
         {
-            double[] values = arrCtl.Data.AsEnumerable<double>().ToArray();
+            double[] values = _arrCtl.Data.AsEnumerable<double>().ToArray();
             string list = string.Join(",", values);
 
             File.WriteAllText(fileName, list);
@@ -180,9 +180,9 @@ namespace WinFormsArrayVisualizer
         private void SetControls()
         {
             int temp = dimensionSelector.SelectedIndex + 2;
-            if (temp != dims)
+            if (temp != _dims)
             {
-                dims = temp;
+                _dims = temp;
 
                 domainUpDownAngle.Items.Clear();
                 domainUpDownAxis.Items.Clear();
@@ -195,7 +195,7 @@ namespace WinFormsArrayVisualizer
                 domainUpDownAxis.Items.Add("Y");
                 domainUpDownAxis.Items.Add("Z");
 
-                if (dims >= 3)
+                if (_dims >= 3)
                 {
                     numericUpDownZ.Visible = true;
                     label1Z.Visible = true;
@@ -218,7 +218,7 @@ namespace WinFormsArrayVisualizer
                     label2Z.Visible = false;
                 }
 
-                if (dims >= 4)
+                if (_dims >= 4)
                 {
                     domainUpDownAngle.Items.Add("360");
                     domainUpDownAngle.Items.Add("450");
@@ -284,30 +284,30 @@ namespace WinFormsArrayVisualizer
             {
                 mainPanel.Controls.Clear();
 
-                switch (dims)
+                switch (_dims)
                 {
                     case 2:
-                        arrCtl = new Array2D();
+                        _arrCtl = new Array2D();
                         break;
                     case 3:
-                        arrCtl = new Array3D();
+                        _arrCtl = new Array3D();
                         break;
                     case 4:
-                        arrCtl = new Array4D();
+                        _arrCtl = new Array4D();
                         break;
                     default:
                         throw new ArrayTypeMismatchException(string.Format(
                             Thread.CurrentThread.CurrentUICulture.NumberFormat, Resources.ArrayNotValidDimsException,
-                            dims));
+                            _dims));
                 }
 
-                mainPanel.Controls.Add(arrCtl);
+                mainPanel.Controls.Add(_arrCtl);
 
-                arrCtl.CellWidth = (int) numericUpDownCellWidth.Value;
-                arrCtl.CellHeight = (int) numericUpDownCellHeight.Value;
-                arrCtl.Formatter = "0.##";
+                _arrCtl.CellWidth = (int) numericUpDownCellWidth.Value;
+                _arrCtl.CellHeight = (int) numericUpDownCellHeight.Value;
+                _arrCtl.Formatter = "0.##";
 
-                arrCtl.Data = GetData(dims);
+                _arrCtl.Data = GetData(_dims);
 
                 rotatePanel.Enabled = true;
                 resizePanel.Enabled = true;
@@ -326,16 +326,16 @@ namespace WinFormsArrayVisualizer
             var z = (int) numericUpDownZ1.Value;
             var a = (int) numericUpDownA1.Value;
 
-            switch (dims)
+            switch (_dims)
             {
                 case 2:
-                    arrCtl.Data = ((double[,]) arrCtl.Data).Resize(y, x);
+                    _arrCtl.Data = ((double[,]) _arrCtl.Data).Resize(y, x);
                     break;
                 case 3:
-                    arrCtl.Data = ((double[,,]) arrCtl.Data).Resize(z, y, x);
+                    _arrCtl.Data = ((double[,,]) _arrCtl.Data).Resize(z, y, x);
                     break;
                 case 4:
-                    arrCtl.Data = ((double[,,,]) arrCtl.Data).Resize(a, z, y, x);
+                    _arrCtl.Data = ((double[,,,]) _arrCtl.Data).Resize(a, z, y, x);
                     break;
                 default:
                     throw new ArrayTypeMismatchException();
@@ -363,16 +363,16 @@ namespace WinFormsArrayVisualizer
                     break;
             }
 
-            switch (dims)
+            switch (_dims)
             {
                 case 2:
-                    arrCtl.Data = ((double[,]) arrCtl.Data).Rotate(angle);
+                    _arrCtl.Data = ((double[,]) _arrCtl.Data).Rotate(angle);
                     break;
                 case 3:
-                    arrCtl.Data = ((double[,,]) arrCtl.Data).Rotate(r, angle);
+                    _arrCtl.Data = ((double[,,]) _arrCtl.Data).Rotate(r, angle);
                     break;
                 case 4:
-                    arrCtl.Data = ((double[,,,]) arrCtl.Data).Rotate(r, angle);
+                    _arrCtl.Data = ((double[,,,]) _arrCtl.Data).Rotate(r, angle);
                     break;
             }
         }

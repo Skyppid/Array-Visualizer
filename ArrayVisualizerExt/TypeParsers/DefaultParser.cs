@@ -9,7 +9,7 @@ namespace ArrayVisualizerExt.TypeParsers
 
         public DefaultParser(IArrayLoader arrayLoader)
         {
-            this._arrayLoader = arrayLoader;
+            _arrayLoader = arrayLoader;
         }
 
         #region ITypeParser Members

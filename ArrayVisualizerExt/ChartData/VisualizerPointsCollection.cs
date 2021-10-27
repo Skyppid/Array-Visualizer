@@ -20,10 +20,7 @@ namespace ArrayVisualizerExt.ChartData
             }
         }
 
-        public new IChartDataPoint this[int index]
-        {
-            get { return base[index]; }
-        }
+        public new IChartDataPoint this[int index] => base[index];
 
         public ChartValueType XValueType { get; set; }
 

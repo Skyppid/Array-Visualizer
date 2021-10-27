@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using EnvDTE;
 using LinqLib.Sequence;
+using Microsoft.VisualStudio.Shell;
 
 namespace ArrayVisualizerExt.TypeParsers
 {
-    public class SharpDXParser : ITypeParser
+    public class SharpDxParser : ITypeParser
     {
         #region ITypeParser Members
 
@@ -17,7 +18,7 @@ namespace ArrayVisualizerExt.TypeParsers
         public bool IsExpressionTypeSupported(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
 
             string expressionType = expression.Type;
             return expressionType.StartsWith("SharpDX.Matrix") || expressionType.StartsWith("SharpDX.Vector");
@@ -26,9 +27,10 @@ namespace ArrayVisualizerExt.TypeParsers
         public string GetDisplayName(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
 
-            int elements = expression.Value.Count(C => C == ':');
+            ThreadHelper.ThrowIfNotOnUIThread();
+            int elements = expression.Value.Count(c => c == ':');
             string formatter;
             switch (elements)
             {
@@ -52,7 +54,7 @@ namespace ArrayVisualizerExt.TypeParsers
                     break;
                 default:
 
-                    throw new ArgumentOutOfRangeException("expression",
+                    throw new ArgumentOutOfRangeException(nameof(expression),
                         "The number of ':' separators found in expression.Value.Count is invalid.");
             }
 
@@ -62,8 +64,9 @@ namespace ArrayVisualizerExt.TypeParsers
         public int[] GetDimensions(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
 
+            ThreadHelper.ThrowIfNotOnUIThread();
             switch (expression.Type)
             {
                 case "SharpDX.Matrix":
@@ -79,7 +82,7 @@ namespace ArrayVisualizerExt.TypeParsers
                 case "SharpDX.Vector4":
                     return new[] {4};
                 default:
-                    throw new NotSupportedException(string.Format("'{0} is not supported.'", expression.Type));
+                    throw new NotSupportedException($"'{expression.Type} is not supported.'");
             }
         }
 
@@ -95,7 +98,9 @@ namespace ArrayVisualizerExt.TypeParsers
         public object[] GetValues(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
+
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             Predicate<Expression> predicate;
             bool rotate = false;
@@ -104,24 +109,24 @@ namespace ArrayVisualizerExt.TypeParsers
                 case "SharpDX.Matrix":
                 case "SharpDX.Matrix3x2":
                 case "SharpDX.Matrix5x4":
-                    predicate = E => 'M' == E.Name[0];
+                    predicate = e => 'M' == e.Name[0];
                     break;
                 case "SharpDX.Vector2":
-                    predicate = E => "XY".Contains(E.Name.Last());
+                    predicate = e => "XY".Contains(e.Name.Last());
                     break;
                 case "SharpDX.Vector3":
-                    predicate = E => "XYZ".Contains(E.Name.Last());
+                    predicate = e => "XYZ".Contains(e.Name.Last());
                     break;
                 case "SharpDX.Vector4":
-                    predicate = E => "XYZW".Contains(E.Name.Last());
+                    predicate = e => "XYZW".Contains(e.Name.Last());
                     rotate = true;
                     break;
                 default:
-                    return new object[0];
+                    return Array.Empty<object>();
             }
 
             object[] values;
-            IEnumerable<Expression> query = expression.DataMembers.Cast<Expression>().Where(E => predicate(E));
+            IEnumerable<Expression> query = expression.DataMembers.Cast<Expression>().Where(e => predicate(e));
 
             if (rotate)
                 query = query.RotateLeft(1);
@@ -129,7 +134,7 @@ namespace ArrayVisualizerExt.TypeParsers
             if (expression.DataMembers.Item(1).Type.Contains(LeftBracket))
                 values = query.ToArray();
             else
-                values = query.Select(E => E.Value).ToArray();
+                values = query.Select(e => e.Value).ToArray();
             return values;
         }
 

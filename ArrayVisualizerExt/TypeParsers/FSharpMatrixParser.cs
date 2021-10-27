@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.VisualStudio.Shell;
 
 namespace ArrayVisualizerExt.TypeParsers
 {
@@ -40,7 +41,7 @@ namespace ArrayVisualizerExt.TypeParsers
         public string GetDisplayName(EnvDTE.Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
 
             string formatter;
             int[] dimensions = GetDimensions(expression);
@@ -53,14 +54,16 @@ namespace ArrayVisualizerExt.TypeParsers
                     formatter = "Vector{0}{1}{2}";
                     return string.Format(formatter, LeftBracket, dimensions[0], RightBracket);
                 default:
-                    throw new NotSupportedException(string.Format("'{0} is not supported.'", expression.Type));
+                    throw new NotSupportedException($"'{expression.Type} is not supported.'");
             }
         }
 
         public int[] GetDimensions(EnvDTE.Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
+
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             int[] dims;
             switch (GetExpressionType(expression))
@@ -76,7 +79,7 @@ namespace ArrayVisualizerExt.TypeParsers
                     dims[0] = expression.DataMembers.Count - 1;
                     break;
                 default:
-                    throw new NotSupportedException(string.Format("'{0} is not supported.'", expression.Type));
+                    throw new NotSupportedException($"'{expression.Type} is not supported.'");
             }
             return dims;
         }
@@ -93,18 +96,20 @@ namespace ArrayVisualizerExt.TypeParsers
         public object[] GetValues(EnvDTE.Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
+
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             switch (GetExpressionType(expression))
             {
                 case ExpressionType.Matrix:
                     return expression.DataMembers.Item("Item").DataMembers.Item("Values").DataMembers
-                        .Cast<EnvDTE.Expression>().Select(E => E.Value).ToArray();
+                        .Cast<EnvDTE.Expression>().Select(e => e.Value).ToArray();
                 case ExpressionType.Vector:
                     int count = expression.DataMembers.Count - 1;
-                    return expression.DataMembers.Cast<EnvDTE.Expression>().Take(count).Select(E => E.Value).ToArray();
+                    return expression.DataMembers.Cast<EnvDTE.Expression>().Take(count).Select(e => e.Value).ToArray();
                 default:
-                    throw new NotSupportedException(string.Format("'{0} is not supported.'", expression.Type));
+                    throw new NotSupportedException($"'{expression.Type} is not supported.'");
             }
         }
 

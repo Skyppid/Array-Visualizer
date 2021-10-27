@@ -11,12 +11,10 @@ namespace ArrayVisualizerExt.TypeParsers
 
         public ParsersCollection(IArrayLoader arrayLoader, IEnumerable<Type> selectedParsers)
         {
-            if (arrayLoader == null)
-                throw new ArgumentNullException("arrayLoader");
             if (selectedParsers == null)
-                throw new ArgumentNullException("selectedParsers");
+                throw new ArgumentNullException(nameof(selectedParsers));
 
-            this._arrayLoader = arrayLoader;
+            _arrayLoader = arrayLoader ?? throw new ArgumentNullException(nameof(arrayLoader));
             _parsers = new List<ITypeParser>();
 
             foreach (Type parserType in selectedParsers)

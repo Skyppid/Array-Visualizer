@@ -3,8 +3,8 @@
 
 namespace ArrayVisualizerExt
 {
-    static class PkgCmdIDList
+    static class PkgCmdIdList
     {
-        public const uint arrayVisualizerTool = 0x101;
+        public const uint ArrayVisualizerTool = 0x101;
     };
 }

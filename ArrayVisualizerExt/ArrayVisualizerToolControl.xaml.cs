@@ -118,8 +118,7 @@ namespace ArrayVisualizerExt
             if (textBox != null)
             {
                 string text = textBox.Text + e.Text;
-                double temp;
-                bool ok = double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out temp);
+                bool ok = double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out var temp);
                 e.Handled = !ok;
             }
         }
@@ -188,8 +187,8 @@ namespace ArrayVisualizerExt
                     case LoadResults.Exception:
                         Label errorLabel = new Label
                         {
-                            Content = string.Format("Error rendering array '{0}'\r\n\r\n'{1}'",
-                                expressionInfo.Name, _lastLoadException.Message)
+                            Content =
+                                $"Error rendering array '{expressionInfo.Name}'\r\n\r\n'{_lastLoadException.Message}'"
                         };
                         mainPanel.Children.Clear();
                         mainPanel.Children.Add(errorLabel);
@@ -309,7 +308,7 @@ namespace ArrayVisualizerExt
                 foreach (Expression expression in _dte.Debugger.CurrentStackFrame.Locals)
                     _expressions.AddRange(_arrayLoader.GetArrays(string.Empty, expression, _parsers, 0));
 
-                arraysListBox.ItemsSource = _expressions.OrderBy(A => A.SectionCode).ThenBy(A => A.Name);
+                arraysListBox.ItemsSource = _expressions.OrderBy(a => a.SectionCode).ThenBy(a => a.Name);
                 arraysListBox.DisplayMemberPath = "FullName";
             }
 
@@ -333,7 +332,7 @@ namespace ArrayVisualizerExt
                 {
                     object[] values = null;
 
-                    foreach (ITypeParser parser in _parsers.Where(P => P.IsExpressionTypeSupported(expression)))
+                    foreach (ITypeParser parser in _parsers.Where(p => p.IsExpressionTypeSupported(expression)))
                     {
                         _dimensions = parser.GetDimensions(expression);
                         int count = parser.GetMembersCount(expression);
@@ -422,8 +421,7 @@ namespace ArrayVisualizerExt
 
         private static int GetCellSize(string text, int defaultValue)
         {
-            double value;
-            if (double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out value))
+            if (double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out var value))
                 return (int) value;
 
             return defaultValue;
@@ -542,8 +540,7 @@ namespace ArrayVisualizerExt
         {
             foreach (object item in array)
             {
-                double value;
-                if (double.TryParse(item.ToString(), NumberStyles.Any, CultureInfo.CurrentCulture, out value))
+                if (double.TryParse(item.ToString(), NumberStyles.Any, CultureInfo.CurrentCulture, out var value))
                     yield return value;
                 else
                     yield break;
@@ -656,8 +653,7 @@ namespace ArrayVisualizerExt
             else
                 text = (exp.Value ?? "");
 
-            double number;
-            if (double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out number))
+            if (double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out var number))
                 text = number.ToString(formatter, CultureInfo.CurrentCulture);
             return text;
         }
@@ -671,8 +667,7 @@ namespace ArrayVisualizerExt
             else
                 text = (exp.Value ?? "");
 
-            long number;
-            if (long.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out number))
+            if (long.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out var number))
                 text = number.ToString(formatter, CultureInfo.CurrentCulture);
             return text;
         }

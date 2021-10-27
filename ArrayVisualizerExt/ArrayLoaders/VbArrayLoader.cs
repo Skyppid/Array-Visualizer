@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ArrayVisualizerExt.TypeParsers;
 using EnvDTE;
+using Microsoft.VisualStudio.Shell;
 
 namespace ArrayVisualizerExt.ArrayLoaders
 {
@@ -10,26 +11,18 @@ namespace ArrayVisualizerExt.ArrayLoaders
     {
         #region IArrayLoader Members
 
-        public char LeftBracket
-        {
-            get { return '('; }
-        }
+        public char LeftBracket => '(';
 
-        public char RightBracket
-        {
-            get { return ')'; }
-        }
+        public char RightBracket => ')';
 
         public bool IsExpressionArrayType(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
 
-            string expressionType;
-            if (expression.Type == "System.Array")
-                expressionType = expression.Value;
-            else
-                expressionType = expression.Type;
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var expressionType = expression.Type == "System.Array" ? expression.Value : expression.Type;
 
             expressionType = Helper.RemoveBrackets(expressionType);
             return expressionType.EndsWith(")") && (expressionType.EndsWith("()") || expressionType.EndsWith("(,)") ||
@@ -40,7 +33,9 @@ namespace ArrayVisualizerExt.ArrayLoaders
         public string GetDisplayName(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
+
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             if (expression.Type == "System.Array")
                 return GetDisplayName(expression.DataMembers.Item(1));
@@ -54,10 +49,12 @@ namespace ArrayVisualizerExt.ArrayLoaders
         public IEnumerable<ExpressionInfo> GetArrays(string section, Expression expression, ParsersCollection parsers,
             int sectionCode)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             if (expression.Value == "Nothing" || expression.DataMembers.Count == 0)
                 yield break;
 
-            foreach (ITypeParser parser in parsers.Where(P => P.IsExpressionTypeSupported(expression)))
+            foreach (ITypeParser parser in parsers.Where(p => p.IsExpressionTypeSupported(expression)))
             {
                 yield return new ExpressionInfo(expression.Name, section, parser.GetDisplayName(expression), expression,
                     sectionCode);
@@ -73,7 +70,9 @@ namespace ArrayVisualizerExt.ArrayLoaders
         public int GetMembersCount(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
+
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             if (expression.Type == "System.Array")
                 return GetMembersCount(expression.DataMembers.Item(1));
@@ -84,7 +83,9 @@ namespace ArrayVisualizerExt.ArrayLoaders
         public int[] GetDimensions(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
+
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             if (expression.Type == "System.Array")
                 return GetDimensions(expression.DataMembers.Item(1));
@@ -94,25 +95,24 @@ namespace ArrayVisualizerExt.ArrayLoaders
             dims = dims.Substring(dims.IndexOf(LeftBracket) + 1);
             dims = dims.Substring(0, dims.IndexOf(RightBracket));
 
-            int[] dimenstions = dims.Split(',').Select(X => ParseDimension(X.Trim()) + 1).ToArray();
+            int[] dimenstions = dims.Split(',').Select(x => ParseDimension(x.Trim()) + 1).ToArray();
             return dimenstions;
         }
 
         public int ParseDimension(string dimensionString)
         {
             if (string.IsNullOrEmpty(dimensionString))
-                throw new ArgumentNullException("dimensionString");
+                throw new ArgumentNullException(nameof(dimensionString));
 
-            if (dimensionString.StartsWith("&H"))
-                return int.Parse(dimensionString.Substring(2), System.Globalization.NumberStyles.HexNumber);
-            else
-                return int.Parse(dimensionString);
+            return dimensionString.StartsWith("&H") ? int.Parse(dimensionString.Substring(2), System.Globalization.NumberStyles.HexNumber) : int.Parse(dimensionString);
         }
 
         public object[] GetValues(Expression expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
+
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             if (expression.Type == "System.Array")
                 return GetValues(expression.DataMembers.Item(1));
@@ -121,7 +121,7 @@ namespace ArrayVisualizerExt.ArrayLoaders
             if (expression.DataMembers.Item(1).Type.IndexOf(LeftBracket) != -1)
                 values = expression.DataMembers.Cast<Expression>().ToArray();
             else
-                values = expression.DataMembers.Cast<Expression>().Select(E => E.Value).ToArray();
+                values = expression.DataMembers.Cast<Expression>().Select(e => e.Value).ToArray();
             return values;
         }
 

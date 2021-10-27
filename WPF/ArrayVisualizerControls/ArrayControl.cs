@@ -61,20 +61,20 @@ namespace ArrayVisualizerControls
 
         public double CellHeight
         {
-            get { return _cellSize.Height; }
-            set { _cellSize.Height = value; }
+            get => _cellSize.Height;
+            set => _cellSize.Height = value;
         }
 
         public Size CellSize
         {
-            get { return _cellSize; }
-            set { _cellSize = value; }
+            get => _cellSize;
+            set => _cellSize = value;
         }
 
         public double CellWidth
         {
-            get { return _cellSize.Width; }
-            set { _cellSize.Width = value; }
+            get => _cellSize.Width;
+            set => _cellSize.Width = value;
         }
 
         public ArrayControl ChildArray
@@ -90,21 +90,18 @@ namespace ArrayVisualizerControls
 
         public Array Data { get; private set; }
 
-        public int ElementsCount
-        {
-            get { return DimX * DimY * DimZ * DimA; }
-        }
+        public int ElementsCount => DimX * DimY * DimZ * DimA;
 
         public string Formatter
         {
-            get { return _formatter; }
-            set { _formatter = value; }
+            get => _formatter;
+            set => _formatter = value;
         }
 
         public Func<object, string, string> CaptionBuilder
         {
-            get { return _captionBuilder; }
-            set { _captionBuilder = value ?? DefaultCaptionBuilder; }
+            get => _captionBuilder;
+            set => _captionBuilder = value ?? DefaultCaptionBuilder;
         }
 
         public bool Truncated { get; protected set; }
@@ -173,7 +170,7 @@ namespace ArrayVisualizerControls
         protected Label AddLabel(ArrayRenderSection section, string toolTipCoordinates, double x, double y, object data)
         {
             if (data == null)
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
 
             Type dataType = data.GetType();
             Label label = new Label();
@@ -339,7 +336,7 @@ namespace ArrayVisualizerControls
         public void ShowArrayPopup(UIElement target, Array data, string popupTooltipPrefix, Color backgroundColor)
         {
             if (data == null)
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
 
             if (_popup == null)
                 InitPopup(backgroundColor);
@@ -432,9 +429,8 @@ namespace ArrayVisualizerControls
 
         private string DefaultCaptionBuilder(object data, string numberFormatter)
         {
-            double number;
             string text = (data ?? "").ToString();
-            if (double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out number))
+            if (double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out var number))
                 text = number.ToString(numberFormatter, CultureInfo.CurrentCulture);
             return text;
         }
@@ -443,7 +439,7 @@ namespace ArrayVisualizerControls
         {
             int[] dims = data.GetDimensions();
             string dimsText = string.Join(", ", dims);
-            string text = string.Format("{{{0}}}", data.GetType().Name);
+            string text = $"{{{data.GetType().Name}}}";
             int pos1 = text.IndexOf(RightBracket);
             int pos2 = text.IndexOf(LeftBracket);
             text = text.Substring(0, pos1) + LeftBracket + dimsText + RightBracket + text.Substring(pos2 + 1);

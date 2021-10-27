@@ -18,21 +18,21 @@ namespace ArrayVisualizerExt
         public LargeArrayHandler(int itemsCount, int autoMax, int absoluteMax)
             : this()
         {
-            const string BASEMASSAGE =
+            const string basemassage =
                 "The selected array contains {0:N0} elements.\r\nFor performance reasons, the Array Visualizer will only display small arrays ({1:N0} elements or less) automatically.\r\n";
             if (itemsCount > absoluteMax)
             {
                 ButtonLoadArray.Visibility = Visibility.Hidden;
                 MessageBlock.Text =
                     string.Format(
-                        BASEMASSAGE +
+                        basemassage +
                         "You can force medium size arrays ({1:N0} to {2:N0} elements) to load manually.\r\n\r\nThis array is too large!",
                         itemsCount, autoMax, absoluteMax);
             }
             else
             {
                 ButtonLoadArray.Visibility = Visibility.Visible;
-                MessageBlock.Text = string.Format(BASEMASSAGE + "Click \"Load Array\" to load the array anyway.",
+                MessageBlock.Text = string.Format(basemassage + "Click \"Load Array\" to load the array anyway.",
                     itemsCount, autoMax);
             }
         }
