@@ -2,6 +2,7 @@ Version 1.7.0.0:
 - Upgraded for Visual Studio 2022
 - Dropped support for any older Visual Studio versions (please use v1.6 for those) due to the x64 architecture
 - Upgraded to .NET 4.8
+- Upgraded to AsyncPackage
 
 Version 1.6.0.0:
 - Upgraded for Visual Studio 2019
