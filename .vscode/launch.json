@@ -16,7 +16,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "array-visualizer",
             "skipFiles": [
                 "<node_internals>/**"
             ],
